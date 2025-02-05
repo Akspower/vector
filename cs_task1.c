@@ -2,7 +2,7 @@
   
    int main() {
   
-   printf("Welcome Programmer\n");
+   printf("Namaste Programmer \n");
   
    int num,bit_pos,op,count=0;
    printf("Enter any number\n");
