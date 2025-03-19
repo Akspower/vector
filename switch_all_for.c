@@ -150,7 +150,7 @@ L:
                     a=b;
                     b=c;
                 }
-                printf("In series %d position is %d\n",num,c);
+                printf("In fibonacci  series %d position is %d\n",num,c);
 
             }
             break;

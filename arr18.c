@@ -18,7 +18,7 @@ for(int i=n-1;i>in;i--){
     
 
 }
-a[0]=99;
+a[in]=99;
 
 for(int i=0;i<n;i++){
     printf("%d ",a[i]);
