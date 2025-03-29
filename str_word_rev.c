@@ -42,3 +42,55 @@ int main() {
     printf("%s\n", str); // Print the modified string
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// #include <stdio.h>
+// void rev(char *st,char *en){
+//     while(st<en){
+//         char t=*st;
+//         *st=*en;
+//         *en=t;
+//         st++;
+//         en--;
+//     }
+// }
+// void pass(char *str){
+//     char *s=str,*e,*p=str;
+//     while(*p){
+//         if(*p==' ' || *p=='\0'){
+//             e=(*p==' ')?p-1:p;
+        
+//         for(char *j=s;j<=e;j++){
+//             if(*j>='0' && *j<='9'){
+//                 rev(s,e);
+//                 break;
+//             }
+//         }
+//         s=p+1;
+//         }
+//         p++;
+//     }
+// }
+
+
+
+
+// int main() {
+// char s[]="Aditya Kumar042gc Sha3rma ";
+
+// pass(s);
+
+// printf("%s",s);
+
+//     return 0;
+// }
