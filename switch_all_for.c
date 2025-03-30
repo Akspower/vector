@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include<unistd.h>
+//#include<unistd.h>   warning it used for sleep()
 int factorial(int r){
     int prod=1;
     for(int i=1;i<=r;i++){

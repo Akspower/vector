@@ -34,7 +34,7 @@ int main() {
 // int main() {
 //     int a[] = {2, 3, 5, 5, 5, 7, 11, 13, 2, 3, 11};  
 //     int n = sizeof(a) / sizeof(a[0]); 
-//     int i, j = 0, freq[MAX_VALUE] = {0};  // Increase array size
+//     int i, j = 0, freq[MAX_VALUE] = {0};  //it not handle for negaative element
 
 //     for (i = 0; i < n; i++) {
 //         if (freq[a[i]] == 0) {  
