@@ -3,7 +3,7 @@
 
 //add first and last digit
 int first(int j){
-    if (j >= 0 && j <= 9)
+    if (j >= 0 && j <= 9)    // if only one digit dont add twice for that 
         return 0;
     while(j>10){
         j/=10;
@@ -17,7 +17,7 @@ int last (int j){
 void main()
 {
     int a[]={123,23,89,3425,721,1};
-    int *p=a;
+    //int *p=a;
     int i,j;
     int sum=0;
     int sum2=0;

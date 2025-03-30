@@ -27,10 +27,6 @@ for(int i=0;i<n;i++){
 
 
 
-
-
-
-
 // #include <stdio.h>
 
 // void insertAtPositions(int arr[], int *size, int pos, int num) {

@@ -8,7 +8,7 @@ int pass(int a){
     int count=0;
     for(int j=31;j>=0;j--){
      
-        if(a>>j&1){
+        if(a&1<<j){
             count++;
         }
     }

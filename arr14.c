@@ -2,8 +2,6 @@
  //i/p : int a[7]={2,2,1,5,5,4,4};
 // o/p : second small = 2 
 
-
-
 int main(){
     int a[7]={2,2,1,5,5,4,4};
     int n=sizeof(a)/sizeof(a[0]);
