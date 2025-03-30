@@ -27,8 +27,9 @@ int num=2;
 
 while(count<7){
     if(prime(num)){
-        a[count]=num;
-        count++;
+        a[count++]=num;
+       // count++;
+       
     }
     num++;
 }

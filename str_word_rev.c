@@ -45,15 +45,6 @@ int main() {
 
 
 
-
-
-
-
-
-
-
-
-
 // #include <stdio.h>
 // void rev(char *st,char *en){
 //     while(st<en){

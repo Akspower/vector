@@ -15,7 +15,7 @@ int pass(char s[]){
             printf("%d ",count);
             count=0;
         }
-        i+=1;
+        i++; 
         
 }
 if(count>0){

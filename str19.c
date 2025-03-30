@@ -7,7 +7,7 @@ void insert_char(char *s, int index, char ch, int size) {
 
     // Shift characters to the right
     for (int i = len; i >= index; i--) { // Use i >= index to shift all characters properly            i=len;i>index;i--     s[i]=s[i-1]
-        s[i + 1] = s[i];
+        s[i+1] = s[i];     //s[i]=s[i-1];
     }
 
     // Insert the new character

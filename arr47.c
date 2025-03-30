@@ -22,8 +22,8 @@ int main() {
 int a[6]={6,7,28,6,5,24};
 int n=sizeof(a)/sizeof(a[0]);
 
-int count=0;
-int num=2;
+//int count=0;
+//int num=2;
 int j=0;
 for(int i=0;i<n;i++){
     if(!perfect(a[i])){  // for store only perfect just remove !
@@ -31,7 +31,7 @@ for(int i=0;i<n;i++){
     }
     
 }
-n=j;
+n=j;  // otherwise when print condition is i<j
 
   for(int i=0;i<n;i++){
         printf("%d ",a[i]);
