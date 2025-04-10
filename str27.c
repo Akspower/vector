@@ -32,3 +32,54 @@ int main() {
 
     return 0;
 }
+
+
+
+
+
+
+
+// #include <stdio.h>
+
+// // Function to reverse only the last word
+// void pass(char *s) {
+//     char *start, *end;
+//     char *p = s;
+
+//     // Move to the end of the string
+//     while (*p) {
+//         p++;
+//     }
+//     p--; // Move back from '\0'
+
+//     // Skip trailing spaces
+//     while (p >= s && *(p+1) == ' ') {
+//         p--;
+//     }
+
+//     // Mark the end of the last word
+//     end = p;
+
+//     // Find the start of the last word
+//     while (p >= s && *p != ' ') {
+//         p--;
+//     }
+
+//     start = p + 1; // Move to the first character of the last word
+
+//     // Reverse the last word
+//     while (start < end) {
+//         char c = *start;
+//         *start = *end;
+//         *end = c;
+//         start++;
+//         end--;
+//     }
+// }
+
+// int main() {
+//     char s[30] = "vector india pvt";
+//     pass(s);
+//     printf("%s", s); // Output: vector india tvp
+//     return 0;
+// }

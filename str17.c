@@ -6,14 +6,11 @@
 char delete (char *p){
    int i=0,j=0;;
 while(p[i]){
-if(p[i]!='2' && p[i]!='3' && p[i]!='5' && p[i]!='7'){             // if (p[i] < '0' || p[i] > '9')      to remove digit
+if(p[i]!='2' && p[i]!='3' && p[i]!='5' && p[i]!='7'){  // if (p[i] < '0' || p[i] > '9')   to remove digit
     p[j++]=p[i];
    
 }
  i++;
-
-
-
 }
 p[j]='\0';
 }

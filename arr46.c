@@ -33,6 +33,7 @@ while(count<7){
     }
     num++;
 }
+//printf("%d ",num);
 
   for(int i=0;i<n;i++){
         printf("%d ",a[i]);
