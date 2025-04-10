@@ -58,7 +58,7 @@ int main() {
 // void pass(char *str){
 //     char *s=str,*e,*p=str;
 //     while(*p){
-//         if(*p==' ' || *p=='\0'){
+//         if(*p==' ' || *(p+1)=='\0'){
 //             e=(*p==' ')?p-1:p;
         
 //         for(char *j=s;j<=e;j++){
