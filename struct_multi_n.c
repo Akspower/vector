@@ -39,7 +39,7 @@ int main() {
         students[i].name = NULL; // Prevent dangling pointer
     }
     free(students);
-    students = NULL; // Prevent dangling pointer
+    students = NULL; // Prevent dangling pointer otherwise chance of memory leak
 
     return 0;
 } 
