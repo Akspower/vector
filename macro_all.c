@@ -22,7 +22,7 @@
 // ✅ 3. Safe Stringify
 // - Turns code into string literals safely
 // ==========================
-#define STRINGIFY(x) #x         // Step 1
+#define STRINGIFY(x) #x         // Step 1    
 #define TOSTRING(x) STRINGIFY(x) // Step 2 to evaluate macros passed as argument
 
 // ==========================
