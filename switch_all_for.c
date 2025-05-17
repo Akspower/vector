@@ -120,9 +120,6 @@ L:
                 r=temp%10;
                 count++;
                 temp/=10;
-
-
-
             }
 
             for(temp=num;temp;temp/=10){
