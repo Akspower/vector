@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct student {
     int roll;
@@ -10,16 +11,90 @@ typedef struct student {
 
 sll *headptr = NULL;
 
-// Add node at the beginning
+// Helper function to clear the input buffer
+void clear_input_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 void add_begin(sll **ptr) {
     sll *new = malloc(sizeof(sll));
     printf("Enter roll, name, marks: ");
-    scanf("%d %s %f", &new->roll, new->name, &new->marks);
+    scanf("%d %19s %f", &new->roll, new->name, &new->marks);
+    clear_input_buffer();  // Clear buffer after reading input
     new->next = *ptr;
     *ptr = new;
 }
 
-// Print the linked list
+void add_middle(sll **ptr) {
+    int pos, cnt = 0;
+    sll *temp = *ptr;
+    while (temp) {
+        cnt++;
+        temp = temp->next;
+    }
+
+    printf("Enter position\n");
+    if (scanf("%d", &pos) != 1) {
+        clear_input_buffer();
+        printf("Invalid input\n");
+        return;
+    }
+    clear_input_buffer();  // Clear buffer after reading position
+
+    if (pos < 1 || pos > cnt + 1) {
+        printf("Invalid position\n");
+        return;
+    }
+
+    if (pos == 1) {
+        add_begin(ptr);
+        return;
+    }
+
+    sll *new = malloc(sizeof(sll));
+    printf("Enter roll, name, marks: ");
+    if (scanf("%d %19s %f", &new->roll, new->name, &new->marks) != 3) {
+        clear_input_buffer();
+        printf("Invalid input\n");
+        free(new);
+        return;
+    }
+    clear_input_buffer();  // Clear buffer after reading input
+
+    temp = *ptr;
+    for (int i = 1; i < pos - 1; i++) {
+        temp = temp->next;
+    }
+
+    new->next = temp->next;
+    temp->next = new;
+    printf("Node added at position %d\n", pos);
+}
+
+void add_end(sll **ptr) {
+    sll *new, *last;
+    new = malloc(sizeof(sll));
+    printf("Enter roll, name, marks: ");
+    if (scanf("%d %19s %f", &new->roll, new->name, &new->marks) != 3) {
+        clear_input_buffer();
+        printf("Invalid input\n");
+        free(new);
+        return;
+    }
+    clear_input_buffer();  // Clear buffer after reading input
+
+    new->next = NULL;
+    if (*ptr == NULL) {
+        *ptr = new;
+    } else {
+        last = *ptr;
+        while (last->next)
+            last = last->next;
+        last->next = new;
+    }
+}
+
 void print(sll *ptr) {
     if (ptr == NULL) {
         printf("List is empty\n");
@@ -32,7 +107,6 @@ void print(sll *ptr) {
     }
 }
 
-// Count number of nodes
 int count(sll *ptr) {
     int cnt = 0;
     while (ptr) {
@@ -42,211 +116,222 @@ int count(sll *ptr) {
     return cnt;
 }
 
-// Save list data to a file
-void savefile(sll *ptr){
+void savefile(sll *ptr) {
     FILE *fp = fopen("temp.txt", "w");
-    while(ptr){
+    while (ptr) {
         fprintf(fp, "%d,%s,%f\n", ptr->roll, ptr->name, ptr->marks);
         ptr = ptr->next;
     }
     fclose(fp);
 }
 
-// Add node at the end
-void add_end(sll **ptr){
-    sll *new, *last;
-    new = malloc(sizeof(sll));
-    printf("Enter data for last: ");
-    scanf("%d %s %f", &new->roll, new->name, &new->marks);
-    new->next = 0;
-
-    if (*ptr == 0) {
-        *ptr = new;
-    } else {
-        last = *ptr;
-        while (last->next)
-            last = last->next;
-        last->next = new;
-    }
-}
-
-// Read data from file into the list
-void readfile(sll **ptr){
+void readfile(sll **ptr) {
     sll *new, *last;
     FILE *fp = fopen("temp.txt", "r");
-    if (fp == 0) {
+    if (fp == NULL) {
         printf("File not found\n");
         return;
     }
+
+    // Clear the existing list
+    while (*ptr) {
+        sll *temp = *ptr;
+        *ptr = (*ptr)->next;
+        free(temp);
+    }
+
+    int count = 0;
     while (1) {
         new = malloc(sizeof(sll));
-        if (fscanf(fp, "%d,%[^,],%f", &new->roll, new->name, &new->marks) != 3) {
+        int result = fscanf(fp, "%d,%19[^,],%f\n", &new->roll, new->name, &new->marks);
+        if (result != 3) {
             free(new);
+            if (result == EOF && count == 0) {
+                printf("File is empty\n");
+            }
             break;
         }
-        new->next = 0;
-        if (*ptr == 0)
+        new->next = NULL;
+        if (*ptr == NULL) {
             *ptr = new;
-        else {
+        } else {
             last = *ptr;
-            while (last->next)
+            while (last->next) {
                 last = last->next;
+            }
             last->next = new;
         }
+        count++;
     }
     fclose(fp);
+    if (count > 0) {
+        printf("Read %d records from temp.txt\n", count);
+    }
 }
 
-// Recursive print
-void print_rec(sll *ptr){
-    if(ptr == NULL) return;
-    printf("%d %s %f\n", ptr->roll, ptr->name, ptr->marks);
+void print_rec(sll *ptr) {
+    if (ptr == NULL) return;
+    printf("Roll: %d, Name: %s, Marks: %.1f\n", ptr->roll, ptr->name, ptr->marks);
     print_rec(ptr->next);
 }
 
-// Reverse print recursively (just for display)
-void reverse_rec(sll *ptr){
-    if(ptr == NULL) return;
+void reverse_rec(sll *ptr) {
+    if (ptr == NULL) return;
     reverse_rec(ptr->next);
-    printf("%d %s %f\n", ptr->roll, ptr->name, ptr->marks);
+    printf("Roll: %d, Name: %s, Marks: %.1f\n", ptr->roll, ptr->name, ptr->marks);
 }
 
-// Delete all nodes
-void delete_all(sll **ptr){
+void reverse_print(sll *ptr) {
+    if (ptr == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+
+    int cnt = count(ptr);
+    sll *temp;
+    printf("Reverse Print:\n");
+    for (int i = cnt; i >= 1; i--) {
+        temp = ptr;
+        for (int j = 1; j < i; j++) {
+            temp = temp->next;
+        }
+        printf("Roll: %d, Name: %s, Marks: %.1f\n", temp->roll, temp->name, temp->marks);
+    }
+}
+
+void delete_all(sll **ptr) {
     sll *temp = *ptr;
-    while(temp){
+    while (temp) {
         sll *next = temp->next;
         free(temp);
         temp = next;
     }
-    *ptr = 0;
-    printf("Deleted all nodes\n");
+    *ptr = NULL;
+    printf("Delete all nodes\n");
 }
 
-// Delete node by roll number
-void delete_node(sll **ptr){
+void delete_node(sll **ptr) {
     int num;
-    printf("Enter roll no. to delete: ");
-    scanf("%d", &num);
-    sll *del = *ptr, *prev = NULL;
+    printf("Enter roll no. to delete\n");
+    if (scanf("%d", &num) != 1) {
+        clear_input_buffer();
+        printf("Invalid input\n");
+        return;
+    }
+    clear_input_buffer();  // Clear buffer after reading input
 
+    sll *del = *ptr, *prev = NULL;
     while (del) {
         if (del->roll == num) {
-            if (del == *ptr)
+            if (del == *ptr) {
                 *ptr = del->next;
-            else
+            } else {
                 prev->next = del->next;
+            }
             free(del);
-            printf("Node deleted\n");
+            printf("Node with roll %d deleted\n", num);
             return;
         }
         prev = del;
         del = del->next;
     }
-    printf("Roll not found\n");
+    printf("Roll %d not found\n", num);
 }
 
-// Search node by name
-void search_node(sll *ptr){
-    char key[20];
-    printf("Enter name to search: ");
-    scanf("%s", key);
-    while(ptr){
-        if(strcmp(ptr->name, key) == 0){
-            printf("Found: %d %s %.1f\n", ptr->roll, ptr->name, ptr->marks);
+void search_node(sll *ptr) {
+    int roll;
+    printf("Enter roll no. to search\n");
+    if (scanf("%d", &roll) != 1) {
+        clear_input_buffer();
+        printf("Invalid input\n");
+        return;
+    }
+    clear_input_buffer();  // Clear buffer after reading input
+
+    while (ptr) {
+        if (ptr->roll == roll) {
+            printf("Found: Roll: %d, Name: %s, Marks: %.1f\n", ptr->roll, ptr->name, ptr->marks);
             return;
         }
         ptr = ptr->next;
     }
-    printf("Not found\n");
+    printf("Roll %d not found\n", roll);
 }
 
-// Sort linked list by roll using bubble sort
-void sort_node(sll *ptr){
-    int i, n = count(ptr);
-    sll *a, *b;
-    for(i = 0; i < n - 1; i++){
-        a = ptr;
-        while(a->next){
-            b = a->next;
-            if(a->roll > b->roll){
-                // Swap data only
-                int t_roll = a->roll;
-                float t_marks = a->marks;
-                char t_name[20];
-                strcpy(t_name, a->name);
+void sort_nodes(sll **ptr) {
+    int n = count(*ptr);
+    if (n <= 1) {
+        printf("List is empty or has only one node, no sorting needed\n");
+        return;
+    }
 
-                a->roll = b->roll;
-                a->marks = b->marks;
-                strcpy(a->name, b->name);
+    sll *current, *next;
+    for (int i = 0; i < n - 1; i++) {
+        current = *ptr;
+        for (int j = 0; j < n - 1 - i; j++) {
+            next = current->next;
+            if (current->roll > next->roll) {
+                // Swap data
+                int temp_roll = current->roll;
+                char temp_name[20];
+                strcpy(temp_name, current->name);
+                float temp_marks = current->marks;
 
-                b->roll = t_roll;
-                b->marks = t_marks;
-                strcpy(b->name, t_name);
+                current->roll = next->roll;
+                strcpy(current->name, next->name);
+                current->marks = next->marks;
+
+                next->roll = temp_roll;
+                strcpy(next->name, temp_name);
+                next->marks = temp_marks;
             }
-            a = a->next;
+            current = current->next;
         }
     }
-    printf("Sorted by roll number\n");
+    printf("List sorted by roll number\n");
 }
 
-// Reverse linked list (actual links)
-void reverse_list(sll **head){
-    sll *prev = NULL, *curr = *head, *next = NULL;
-    while(curr){
-        next = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = next;
+void reverse_link(sll **ptr) {
+    sll *prev = NULL, *current = *ptr, *next = NULL;
+    while (current) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
     }
-    *head = prev;
-    printf("Linked list reversed successfully\n");
+    *ptr = prev;
+    printf("List links reversed\n");
 }
-
-// Placeholder: Insert at middle or particular position
-// -> You can build your logic here later
-void add_middle(sll **ptr){
-    printf("// TODO: Add logic to insert at middle/particular position\n");
-}
-
 
 int main() {
     int op, c;
     while (1) {
         printf("\nEnter your choice:\n");
-        printf("1. Add at beginning\n");
-        printf("2. Add at end\n");
-        printf("3. Print list\n");
-        printf("4. Count nodes\n");
-        printf("5. Save to file\n");
-        printf("6. Read from file\n");
-        printf("7. Print recursively\n");
-        printf("8. Reverse print recursively\n");
-        printf("9. Delete all\n");
-        printf("10. Delete node\n");
-        printf("11. Search by name\n");
-        printf("12. Sort by roll number\n");
-        printf("13. Reverse linked list (actual)\n");
-        printf("14. Insert at middle/particular node (future logic)\n");
-        printf("15. Exit\n");
+        printf("1. Add at beginning\n2. Add at middle\n3. Add at end\n4. Print list\n5. Count nodes\n6. Save to file\n7. Read from file\n8. Reverse print\n9. Print recursive\n10. Reverse print recursive\n11. Delete all\n12. Delete node\n13. Search node\n14. Sort nodes\n15. Reverse link\n16. Exit\n");
+        if (scanf("%d", &op) != 1) {
+            clear_input_buffer();  // Clear buffer on invalid input
+            printf("Invalid choice! Try again.\n");
+            continue;
+        }
+        clear_input_buffer();  // Clear buffer after reading choice
 
-        scanf("%d", &op);
         switch (op) {
             case 1: add_begin(&headptr); break;
-            case 2: add_end(&headptr); break;
-            case 3: print(headptr); break;
-            case 4: c = count(headptr); printf("Count is %d\n", c); break;
-            case 5: savefile(headptr); break;
-            case 6: readfile(&headptr); break;
-            case 7: print_rec(headptr); break;
-            case 8: reverse_rec(headptr); break;
-            case 9: delete_all(&headptr); break;
-            case 10: delete_node(&headptr); break;
-            case 11: search_node(headptr); break;
-            case 12: sort_node(headptr); break;
-            case 13: reverse_list(&headptr); break;
-            case 14: add_middle(&headptr); break;
-            case 15: exit(0);
+            case 2: add_middle(&headptr); break;
+            case 3: add_end(&headptr); break;
+            case 4: print(headptr); break;
+            case 5: c = count(headptr); printf("Count is %d\n", c); break;
+            case 6: savefile(headptr); break;
+            case 7: readfile(&headptr); break;
+            case 8: reverse_print(headptr); break;
+            case 9: print_rec(headptr); break;
+            case 10: reverse_rec(headptr); break;
+            case 11: delete_all(&headptr); break;
+            case 12: delete_node(&headptr); break;
+            case 13: search_node(headptr); break;
+            case 14: sort_nodes(&headptr); break;
+            case 15: reverse_link(&headptr); break;
+            case 16: exit(0);
             default: printf("Invalid choice! Try again.\n");
         }
     }
