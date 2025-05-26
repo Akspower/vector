@@ -252,7 +252,7 @@ void search_node(sll *ptr) {
         if (ptr->roll == roll) {
             printf("Found: Roll: %d, Name: %s, Marks: %.1f\n", ptr->roll, ptr->name, ptr->marks);
             return;
-        }
+        }    
         ptr = ptr->next;
     }
     printf("Roll %d not found\n", roll);
