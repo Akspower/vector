@@ -270,7 +270,7 @@ void sort_nodes(sll **ptr) {
         current = *ptr;
         for (int j = 0; j < n - 1 - i; j++) {
             next = current->next;
-            if (current->roll > next->roll) {
+            if (current->roll > next->roll) {         // for name base sorrting strcmp  
                 // Swap data
                 int temp_roll = current->roll;
                 char temp_name[20];
@@ -314,7 +314,7 @@ int main() {
             continue;
         }
         clear_input_buffer();  // Clear buffer after reading choice
-
+               //clear buffer not required so not go in loop
         switch (op) {
             case 1: add_begin(&headptr); break;
             case 2: add_middle(&headptr); break;
