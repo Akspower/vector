@@ -312,6 +312,8 @@ int main() {
             clear_input_buffer();  // Clear buffer on invalid input
             printf("Invalid choice! Try again.\n");
             continue;
+
+            
         }
         clear_input_buffer();  // Clear buffer after reading choice
                //clear buffer not required so not go in loop
