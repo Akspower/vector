@@ -20,6 +20,7 @@ Node* createNode(int data) {
     return new;
 }
 
+
 // Add at beginning
 void add_begin(Node** ptr, int data) {
     Node* new = createNode(data);
